@@ -1,7 +1,7 @@
 {
   "name": "fat-lock-action",
   "description": "GitHub Action to check package-lock.json changes size and comment on PR",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "author": "bohdanbirdie",
   "type": "module",
   "private": true,
