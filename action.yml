@@ -30,7 +30,7 @@ inputs:
 
 outputs:
   changes-size:
-    description: 'Number of lines changed in package-lock.json'
+    description: 'Number of lines changed in lock file'
 
 runs:
   using: node20
