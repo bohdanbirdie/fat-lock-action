@@ -16,5 +16,5 @@ jobs:
         uses: ./
         with:
           size-threshold: '100'
-          lockfile-path: 'examples/package-lock.json'
+          lockfile-path: 'example/package-lock.json'
           github-token: ${{ secrets.GITHUB_TOKEN }}
