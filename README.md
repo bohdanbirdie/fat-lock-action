@@ -31,6 +31,10 @@ name: Check lockfile Changes
 
 on: [pull_request]
 
+permissions:
+  pull-requests: write
+  contents: read
+
 jobs:
   check-lock:
     runs-on: ubuntu-latest
