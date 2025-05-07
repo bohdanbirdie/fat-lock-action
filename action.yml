@@ -14,7 +14,11 @@ inputs:
   size-threshold:
     description: 'Size threshold in lines after which to warn (default: 100)'
     required: false
-    default: '100'
+    default: '1000'
+  lock-file-path:
+    description: 'Path to the lock file (e.g., package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb)'
+    required: false
+    default: 'package-lock.json'
 
 outputs:
   changes-size:

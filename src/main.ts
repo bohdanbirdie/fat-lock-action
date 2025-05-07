@@ -5,6 +5,7 @@ export async function run(): Promise<void> {
   try {
     const token = core.getInput('github-token')
     const sizeThreshold = parseInt(core.getInput('size-threshold'), 10)
+    const lockFilePath = core.getInput('lock-file-path')
     const octokit = github.getOctokit(token)
     const context = github.context
 
@@ -27,12 +28,16 @@ export async function run(): Promise<void> {
     })
 
     const diff = response.data.toString()
-    const packageLockChanges = extractPackageLockChanges(diff)
+    const packageLockChanges = extractPackageLockChanges(diff, lockFilePath)
 
     core.setOutput('changes-size', packageLockChanges.length)
 
     if (packageLockChanges.length > sizeThreshold) {
-      const comment = generateComment(packageLockChanges.length, sizeThreshold)
+      const comment = generateComment(
+        packageLockChanges.length,
+        sizeThreshold,
+        lockFilePath
+      )
 
       await octokit.rest.issues.createComment({
         owner,
@@ -42,11 +47,11 @@ export async function run(): Promise<void> {
       })
 
       core.warning(
-        `package-lock.json changes (${packageLockChanges.length} lines) exceed threshold of ${sizeThreshold} lines`
+        `${lockFilePath} changes (${packageLockChanges.length} lines) exceed threshold of ${sizeThreshold} lines`
       )
     } else {
       core.info(
-        `package-lock.json changes (${packageLockChanges.length} lines) are within threshold of ${sizeThreshold} lines`
+        `${lockFilePath} changes (${packageLockChanges.length} lines) are within threshold of ${sizeThreshold} lines`
       )
     }
   } catch (error) {
@@ -54,20 +59,20 @@ export async function run(): Promise<void> {
   }
 }
 
-function extractPackageLockChanges(diff: string): string[] {
+function extractPackageLockChanges(diff: string, lockFile: string): string[] {
   const lines = diff.split('\n')
   const changes: string[] = []
-  let inPackageLock = false
+  let inLockFile = false
 
   for (const line of lines) {
-    if (line.startsWith('diff --git') && line.includes('package-lock.json')) {
-      inPackageLock = true
+    if (line.startsWith('diff --git') && line.includes(lockFile)) {
+      inLockFile = true
       continue
-    } else if (inPackageLock && line.startsWith('diff --git')) {
-      inPackageLock = false
+    } else if (inLockFile && line.startsWith('diff --git')) {
+      inLockFile = false
     }
 
-    if (inPackageLock && (line.startsWith('+') || line.startsWith('-'))) {
+    if (inLockFile && (line.startsWith('+') || line.startsWith('-'))) {
       changes.push(line)
     }
   }
@@ -75,15 +80,31 @@ function extractPackageLockChanges(diff: string): string[] {
   return changes
 }
 
-function generateComment(changesCount: number, threshold: number): string {
-  return `## ⚠️ Large package-lock.json Changes Detected
+function generateComment(
+  changesCount: number,
+  threshold: number,
+  lockFile: string
+): string {
+  const fileName = lockFile.split('/').pop() || lockFile
+  return `## ⚠️ Large \`${fileName}\` Changes Detected
 
-This PR contains **${changesCount} lines** of changes to package-lock.json, which exceeds the threshold of ${threshold} lines.
+This PR contains **${changesCount} lines** of changes to \`${fileName}\`, which exceeds the threshold of ${threshold} lines.
 
-### 💡 Suggestions:
-- Consider if all these dependency changes are necessary
-- Review the changes to ensure no unwanted dependencies were added
-- If these changes are intentional, please explain in the PR description
+### ⚠️ Possible Accidental Lock File Regeneration
+Large changes to \`${fileName}\` often indicate that the lock file was regenerated from scratch, which might be unintentional.
 
-For more information, check the [package-lock.json changes](${github.context.payload.pull_request?.html_url}) in this PR.`
+### 🔍 Common Causes:
+- Running install without the existing lock file
+- Different package manager versions between local and CI
+- Switching package managers without migrating the lock file
+
+### 💡 If This Was Unintentional:
+1. Restore the original lock file
+2. Use the same package manager version as in the project
+3. Only run install with an existing lock file
+
+### 🟢 If This Was Intentional:
+Please explain in the PR description why the lock file needed to be regenerated
+
+For more information, check the [\`${fileName}\` changes](${github.context.payload.pull_request?.html_url}) in this PR.`
 }
