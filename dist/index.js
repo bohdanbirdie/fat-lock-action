@@ -31255,14 +31255,24 @@ async function run() {
         const packageLockChanges = extractPackageLockChanges(diff, lockFilePath);
         coreExports.setOutput('changes-size', packageLockChanges.length);
         if (packageLockChanges.length > sizeThreshold) {
-            const comment = generateComment(packageLockChanges.length, sizeThreshold, lockFilePath);
-            await octokit.rest.issues.createComment({
-                owner,
-                repo,
-                issue_number: pull_number,
-                body: comment
-            });
-            coreExports.warning(`${lockFilePath} changes (${packageLockChanges.length} lines) exceed threshold of ${sizeThreshold} lines`);
+            const commentEnabled = coreExports.getInput('comment-enabled').toLowerCase() === 'true';
+            const failIfExceeded = coreExports.getInput('fail-if-exceeded').toLowerCase() === 'true';
+            if (commentEnabled) {
+                const comment = generateComment(packageLockChanges.length, sizeThreshold, lockFilePath);
+                await octokit.rest.issues.createComment({
+                    owner,
+                    repo,
+                    issue_number: pull_number,
+                    body: comment
+                });
+            }
+            const message = `${lockFilePath} changes (${packageLockChanges.length} lines) exceed threshold of ${sizeThreshold} lines`;
+            if (failIfExceeded) {
+                coreExports.setFailed(message);
+            }
+            else {
+                coreExports.warning(message);
+            }
         }
         else {
             coreExports.info(`${lockFilePath} changes (${packageLockChanges.length} lines) are within threshold of ${sizeThreshold} lines`);
@@ -31311,9 +31321,7 @@ Large changes to \`${fileName}\` often indicate that the lock file was regenerat
 3. Only run install with an existing lock file
 
 ### 🟢 If This Was Intentional:
-Please explain in the PR description why the lock file needed to be regenerated
-
-For more information, check the [\`${fileName}\` changes](${githubExports.context.payload.pull_request?.html_url}) in this PR.`;
+Please explain in the PR description why the lock file needed to be regenerated`;
 }
 
 /**

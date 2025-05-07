@@ -12,13 +12,21 @@ inputs:
     required: true
     default: ${{ github.token }}
   size-threshold:
-    description: 'Size threshold in lines after which to warn (default: 100)'
+    description: 'Size threshold in lines after which to warn (default: 1000)'
     required: false
     default: '1000'
   lock-file-path:
     description: 'Path to the lock file (e.g., package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb)'
     required: false
     default: 'package-lock.json'
+  comment-enabled:
+    description: 'Whether to comment on PR when changes exceed threshold'
+    required: false
+    default: 'true'
+  fail-if-exceeded:
+    description: 'Whether to fail the action if threshold is exceeded'
+    required: false
+    default: 'true'
 
 outputs:
   changes-size:
