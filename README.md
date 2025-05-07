@@ -20,14 +20,14 @@ changes are intentional. 🔐
 - Comments on PRs when lockfile changes exceed a specified threshold
 - Can fail CI checks if changes are too large
 - Configurable thresholds and file paths
-- Supports multiple lock file formats
+- Supports multiple lockfile formats
 
 ## Usage
 
 Add this action to your workflow:
 
 ```yaml
-name: Check Lock File Changes
+name: Check lockfile Changes
 
 on: [pull_request]
 
