@@ -1,23 +1,24 @@
-name: The name of your action here
-description: Provide a description here
-author: Your name or organization here
+name: Fat Lock Action
+description: Checks if package-lock.json changes are too large and comments on PR
+author: bohdanbirdie
 
-# Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
-  icon: heart
-  color: red
+  icon: alert-circle
+  color: yellow
 
-# Define your inputs here.
 inputs:
-  milliseconds:
-    description: Your input description here
+  github-token:
+    description: 'GitHub token for commenting on PR'
     required: true
-    default: '1000'
+    default: ${{ github.token }}
+  size-threshold:
+    description: 'Size threshold in lines after which to warn (default: 100)'
+    required: false
+    default: '100'
 
-# Define your outputs here.
 outputs:
-  time:
-    description: Your output description here
+  changes-size:
+    description: 'Number of lines changed in package-lock.json'
 
 runs:
   using: node20

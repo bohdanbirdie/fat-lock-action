@@ -1,17 +1,17 @@
 {
-  "name": "typescript-action",
-  "description": "GitHub Actions TypeScript template",
-  "version": "0.0.0",
-  "author": "",
+  "name": "fat-lock-action",
+  "description": "GitHub Action to check package-lock.json changes size and comment on PR",
+  "version": "1.0.0",
+  "author": "bohdanbirdie",
   "type": "module",
   "private": true,
-  "homepage": "https://github.com/actions/typescript-action",
+  "homepage": "https://github.com/bohdanbirdie/fat-lock-action",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/bohdanbirdie/fat-lock-action.git"
   },
   "bugs": {
-    "url": "https://github.com/actions/typescript-action/issues"
+    "url": "https://github.com/bohdanbirdie/fat-lock-action/issues"
   },
   "keywords": [
     "actions"
@@ -37,7 +37,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.11.1"
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.0"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.8",
