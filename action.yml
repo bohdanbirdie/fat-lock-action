@@ -18,8 +18,8 @@ inputs:
     default: '1000'
   lockfile-path:
     description:
-      'Path to the lockfile (e.g., package-lock.json, yarn.lock,
-      pnpm-lock.yaml, bun.lockb)'
+      'Path to the lockfile (e.g., package-lock.json, yarn.lock, pnpm-lock.yaml,
+      bun.lockb)'
     required: false
     default: 'package-lock.json'
   comment-enabled:

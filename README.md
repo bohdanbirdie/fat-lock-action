@@ -10,12 +10,13 @@
 
 </div>
 
-A GitHub Action that monitors the size of lockfile changes in pull requests. It helps prevent accidental lockfile regeneration and ensures that dependency changes are intentional. 🔐
+A GitHub Action that monitors the size of lockfile changes in pull requests. It
+helps prevent accidental lockfile regeneration and ensures that dependency
+changes are intentional. 🔐
 
 ## Features
 
-- Monitors changes in package lockfiles (`package-lock.json`, `yarn.lock`,
-  etc.)
+- Monitors changes in package lockfiles (`package-lock.json`, `yarn.lock`, etc.)
 - Comments on PRs when lockfile changes exceed a specified threshold
 - Can fail CI checks if changes are too large
 - Configurable thresholds and file paths
@@ -49,7 +50,7 @@ jobs:
 | Input              | Description                                          | Required | Default             |
 | ------------------ | ---------------------------------------------------- | -------- | ------------------- |
 | `github-token`     | GitHub token for API access                          | Yes      | N/A                 |
-| `size-threshold`   | Maximum number of lines changed in lockfile         | No       | `1000`              |
-| `lockfile-path`   | Path to the lockfile to monitor                     | No       | `package-lock.json` |
+| `size-threshold`   | Maximum number of lines changed in lockfile          | No       | `1000`              |
+| `lockfile-path`    | Path to the lockfile to monitor                      | No       | `package-lock.json` |
 | `comment-enabled`  | Whether to comment on PR when threshold is exceeded  | No       | `true`              |
 | `fail-if-exceeded` | Whether to fail the check when threshold is exceeded | No       | `true`              |
