@@ -1,5 +1,6 @@
 name: Fat Lock Action
-description: Checks if package-lock.json changes are too large and comments on PR
+description:
+  Checks if package-lock.json changes are too large and comments on PR
 author: bohdanbirdie
 
 branding:
@@ -16,7 +17,9 @@ inputs:
     required: false
     default: '1000'
   lock-file-path:
-    description: 'Path to the lock file (e.g., package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb)'
+    description:
+      'Path to the lock file (e.g., package-lock.json, yarn.lock,
+      pnpm-lock.yaml, bun.lockb)'
     required: false
     default: 'package-lock.json'
   comment-enabled:

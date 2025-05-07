@@ -12,8 +12,8 @@ permissions:
   contents: read
 
 jobs:
-  test-typescript:
-    name: TypeScript Tests
+  check-code:
+    name: Check Code
     runs-on: ubuntu-latest
 
     steps:
@@ -40,25 +40,26 @@ jobs:
         id: npm-lint
         run: npm run lint
 
-      - name: Test
-        id: npm-ci-test
-        run: npm run ci-test
+      - name: Build
+        id: npm-build
+        run: npm run package
 
   test-action:
-    name: GitHub Actions Test
+    name: Test Action
     runs-on: ubuntu-latest
+    needs: check-code
 
     steps:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v4
 
-      - name: Test Local Action
+      - name: Test Action
         id: test-action
         uses: ./
         with:
-          milliseconds: 2000
-
-      - name: Print Output
-        id: output
-        run: echo "${{ steps.test-action.outputs.time }}"
+          github-token: ${{ github.token }}
+          size-threshold: 1000
+          lock-file-path: 'package-lock.json'
+          comment-enabled: true
+          fail-if-exceeded: true
