@@ -1,8 +1,8 @@
+# Fat Lock Action
+
 <div align="center">
 
 <img src="assets/logo.png" alt="Fat Lock Action Logo" width="150" height="150">
-
-# Fat Lock Action
 
 [![GitHub Super-Linter](https://github.com/bohdanbirdie/fat-lock-action/actions/workflows/linter.yml/badge.svg)](https://github.com/bohdanbirdie/fat-lock-action/actions/workflows/linter.yml)
 ![CI](https://github.com/bohdanbirdie/fat-lock-action/actions/workflows/ci.yml/badge.svg)
@@ -10,15 +10,13 @@
 
 </div>
 
-A GitHub Action that monitors the size of lock file changes in pull requests. It
-helps prevent accidental lock file regeneration and ensures that dependency
-changes are intentional. 🔐
+A GitHub Action that monitors the size of lockfile changes in pull requests. It helps prevent accidental lockfile regeneration and ensures that dependency changes are intentional. 🔐
 
 ## Features
 
-- Monitors changes in package lock files (`package-lock.json`, `yarn.lock`,
+- Monitors changes in package lockfiles (`package-lock.json`, `yarn.lock`,
   etc.)
-- Comments on PRs when lock file changes exceed a specified threshold
+- Comments on PRs when lockfile changes exceed a specified threshold
 - Can fail CI checks if changes are too large
 - Configurable thresholds and file paths
 - Supports multiple lock file formats
@@ -51,7 +49,7 @@ jobs:
 | Input              | Description                                          | Required | Default             |
 | ------------------ | ---------------------------------------------------- | -------- | ------------------- |
 | `github-token`     | GitHub token for API access                          | Yes      | N/A                 |
-| `size-threshold`   | Maximum number of lines changed in lock file         | No       | `1000`              |
-| `lock-file-path`   | Path to the lock file to monitor                     | No       | `package-lock.json` |
+| `size-threshold`   | Maximum number of lines changed in lockfile         | No       | `1000`              |
+| `lockfile-path`   | Path to the lockfile to monitor                     | No       | `package-lock.json` |
 | `comment-enabled`  | Whether to comment on PR when threshold is exceeded  | No       | `true`              |
 | `fail-if-exceeded` | Whether to fail the check when threshold is exceeded | No       | `true`              |
