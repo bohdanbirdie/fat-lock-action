@@ -31233,7 +31233,7 @@ async function run() {
     try {
         const token = coreExports.getInput('github-token');
         const sizeThreshold = parseInt(coreExports.getInput('size-threshold'), 10);
-        const lockFilePath = coreExports.getInput('lock-file-path');
+        const lockFilePath = coreExports.getInput('lockfile-path');
         const octokit = githubExports.getOctokit(token);
         const context = githubExports.context;
         if (!context.payload.pull_request) {

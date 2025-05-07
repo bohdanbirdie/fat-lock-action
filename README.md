@@ -40,7 +40,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           size-threshold: 1000
-          lock-file-path: 'package-lock.json'
+          lockfile-path: 'package-lock.json'
           comment-enabled: true
           fail-if-exceeded: true
 ```

@@ -5,7 +5,7 @@ export async function run(): Promise<void> {
   try {
     const token = core.getInput('github-token')
     const sizeThreshold = parseInt(core.getInput('size-threshold'), 10)
-    const lockFilePath = core.getInput('lock-file-path')
+    const lockFilePath = core.getInput('lockfile-path')
     const octokit = github.getOctokit(token)
     const context = github.context
 
