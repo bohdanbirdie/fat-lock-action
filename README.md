@@ -10,11 +10,9 @@
 
 </div>
 
-A GitHub Action that monitors the size of lock file changes in pull requests. It
-helps prevent accidental lock file regeneration and ensures that dependency
-changes are intentional. :lock:
+A GitHub Action that monitors the size of lock file changes in pull requests. It helps prevent accidental lock file regeneration and ensures that dependency changes are intentional. 🔐
 
-### Features
+## Features
 
 - Monitors changes in package lock files (`package-lock.json`, `yarn.lock`,
   etc.)
